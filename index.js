@@ -39,9 +39,25 @@ Airplane.prototype.land = function () {
         + It should return a string with `name` and `age`. Example: "Mary, 50"
 */
 
-function Person() {
-
+function Person(name, age) {
+    this.name = name;
+    this.age  = age;
+    this.stomach = [];
 }
+    Person.prototype.eat = function (edible){
+       if (this.stomach.length < 10) {
+         this.stomach.push(edible);
+       }
+    }
+    Person.prototype.poop = function(){
+        this.stomach = [];
+    }
+    Person.prototype.toString = function () {
+      return `${this.name}, ${this.age}`;
+    }
+
+
+
 
 /*
   TASK 2
@@ -57,9 +73,15 @@ function Person() {
         + The `drive` method should return a string "I ran out of fuel at x miles!" x being `odometer`.
 */
 
-function Car() {
-
+function Car(model, milesPerGallon) {
+     this.model = model;
+     this.milesPerGallon = milesPerGallon;
+     this.tank = 0;
+     this.odometer = 0;
 }
+    Car.prototype.fill = function(gallons) {
+      return this.tank = gallons;
+    }
 
 /*
   TASK 3
@@ -68,18 +90,32 @@ function Car() {
     - Besides the methods on Person.prototype, babies have the ability to `.play()`:
         + Should return a string "Playing with x", x being the favorite toy.
 */
-function Baby() {
-
+function Baby(name, age, favoriteToy) {
+  Person.call(this, name, age);
+  this.favoriteToy = favoriteToy;
+}
+Baby.prototype = Object.create(Person.prototype)
+Baby.prototype.play = function () {
+  return `Playing with ${this.favoriteToy}`;
 }
 
 /* 
   TASK 4
 
   In your own words explain the four principles for the "this" keyword below:
-  1. 
-  2. 
-  3. 
-  4. 
+
+  1. Window/Global Object Binding
+   - In most cases, the value of this is determined by how a function is called (runtime binding). It can't be set by assignment during execution, and it may be different each time the function is called. In most cases, the value of this is determined by how a function is called (runtime binding). It can't be set by assignment during execution, and it may be different each time the function is called. The use case of this principle is very rare.
+
+  2. Implicit Binding
+   - This principle is the best use case scenario for 'this'. here 'this' refers to what comes before the dot (.). In other words, when we run a method that has 'this' in it, this will refer to what comes before the dot.
+
+
+  3. New binding
+  - When we call function with a 'new' binding, 'this' will refer to an object which eventually be returned. 'This' becomes the instance that will be returned by the function.
+
+  4. Explicit binding
+  - Whenever we use JavaScript’s call or apply method, this is explicitly defined.
 */
 
 
